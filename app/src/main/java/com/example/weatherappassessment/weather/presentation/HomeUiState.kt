@@ -1,6 +1,6 @@
 package com.example.weatherappassessment.weather.presentation
 
-import com.example.weatherappassessment.weather.data.remote.entity.WeatherResponse
+import com.example.weatherappassessment.weather.data.entity.WeatherResponse
 
 data class HomeUiState(
     val isLoading: Boolean = false,

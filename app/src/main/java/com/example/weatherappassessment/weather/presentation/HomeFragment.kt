@@ -42,6 +42,6 @@ class HomeFragment : Fragment() {
     }
 
     private fun initView() {
-
+        viewModel.getWeather(42.9832406, -81.243372)
     }
 }

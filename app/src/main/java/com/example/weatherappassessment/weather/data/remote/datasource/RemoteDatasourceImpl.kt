@@ -2,8 +2,8 @@ package com.example.weatherappassessment.weather.data.remote.datasource
 
 import com.example.weatherappassessment.core.data.util.Resource
 import com.example.weatherappassessment.weather.data.remote.api.WeatherService
-import com.example.weatherappassessment.weather.data.remote.entity.Location
-import com.example.weatherappassessment.weather.data.remote.entity.WeatherResponse
+import com.example.weatherappassessment.weather.data.entity.Location
+import com.example.weatherappassessment.weather.data.entity.WeatherResponse
 import com.example.weatherappassessment.core.data.util.NetworkHelper
 import com.example.weatherappassessment.weather.domain.datasource.RemoteDataSource
 import javax.inject.Inject

@@ -1,4 +1,4 @@
-package com.example.weatherappassessment.weather.data.remote.entity
+package com.example.weatherappassessment.weather.data.entity
 
 data class Locations(
 	val locations: List<Location>? = null

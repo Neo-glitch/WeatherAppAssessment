@@ -1,8 +1,8 @@
 package com.example.weatherappassessment.weather.domain.repository
 
 import com.example.weatherappassessment.core.data.util.Resource
-import com.example.weatherappassessment.weather.data.remote.entity.Location
-import com.example.weatherappassessment.weather.data.remote.entity.WeatherResponse
+import com.example.weatherappassessment.weather.data.entity.Location
+import com.example.weatherappassessment.weather.data.entity.WeatherResponse
 
 interface Repository {
     suspend fun getWeather(

@@ -2,7 +2,7 @@ package com.example.weatherappassessment.weather.di
 
 import com.example.weatherappassessment.weather.data.remote.api.WeatherService
 import com.example.weatherappassessment.weather.data.remote.datasource.RemoteDatasourceImpl
-import com.example.weatherappassessment.weather.data.remote.datasource.RepositoryImpl
+import com.example.weatherappassessment.weather.data.repository.RepositoryImpl
 import com.example.weatherappassessment.weather.domain.datasource.RemoteDataSource
 import com.example.weatherappassessment.weather.domain.repository.Repository
 import dagger.Module

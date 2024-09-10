@@ -1,8 +1,8 @@
 package com.example.weatherappassessment.weather.data.remote.api
 
 import com.example.weatherappassessment.BuildConfig
-import com.example.weatherappassessment.weather.data.remote.entity.Location
-import com.example.weatherappassessment.weather.data.remote.entity.WeatherResponse
+import com.example.weatherappassessment.weather.data.entity.Location
+import com.example.weatherappassessment.weather.data.entity.WeatherResponse
 import com.example.weatherappassessment.core.data.util.NetworkHelper
 import retrofit2.Response
 import retrofit2.http.GET
