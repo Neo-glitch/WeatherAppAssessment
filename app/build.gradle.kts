@@ -1,9 +1,16 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
     id("kotlin-kapt")
     id("com.google.dagger.hilt.android")
+    // safe-args
+//    id("androidx.navigation.safeargs.kotlin")
 }
+
+val properties = Properties()
+properties.load(project.rootProject.file("local.properties").inputStream())
 
 android {
     namespace = "com.example.weatherappassessment"
@@ -17,9 +24,14 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+
+        buildConfigField("String", "API_KEY", properties.getProperty("API_KEY"))
+        buildConfigField("String", "BASE_URL", properties.getProperty("BASE_URL"))
     }
 
     buildFeatures {
+        buildConfig = true
         dataBinding = true
     }
 
@@ -65,14 +77,23 @@ dependencies {
     implementation("androidx.datastore:datastore-preferences:1.1.1")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9")
 
-    // Retrofit
+    // retrofit
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
-
-    // OkHttp
-    implementation("com.squareup.okhttp3:okhttp:5.0.0-alpha.2")
-
-    // JSON Converter
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation("com.squareup.retrofit2:converter-moshi:2.9.0")
+    implementation("com.squareup.retrofit2:retrofit-mock:2.9.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.11.0")
+    // glide
+    implementation("com.github.bumptech.glide:glide:4.16.0")
+    kapt("com.github.bumptech.glide:compiler:4.13.0")
+
+//    implementation("android.arch.lifecycle:viewmodel:1.1.1")
+//    implementation("android.arch.lifecycle:extensions:1.1.1")
+
+//    val fragment_version = "1.5.7"
+//    // Kotlin
+//    implementation("androidx.fragment:fragment-ktx:$fragment_version")
+
 }
 
 kapt {
