@@ -1,6 +1,6 @@
 package com.example.weatherappassessment.weather.data.entity
 
-data class WeatherResponse(
+data class DailyForecast(
 	val city: City? = null,
 	val cnt: Int? = null,
 	val cod: String? = null,
@@ -38,7 +38,7 @@ data class WeatherItem(
 	val feelsLike: FeelsLike? = null,
 	val speed: Double? = null,
 	val dt: Int? = null,
-	val pop: Int? = null,
+//	val pop: Int? = null,
 	val sunset: Int? = null,
 	val weather: List<WeatherObject>? = null,
 	val humidity: Int? = null,

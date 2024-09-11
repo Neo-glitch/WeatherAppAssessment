@@ -6,12 +6,12 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.weatherappassessment.core.util.formatDate
+import com.example.weatherappassessment.core.util.getIcon
 import com.example.weatherappassessment.core.util.hide
 import com.example.weatherappassessment.core.util.orZero
 import com.example.weatherappassessment.core.util.show
 import com.example.weatherappassessment.databinding.ItemDailyForecastBinding
 import com.example.weatherappassessment.weather.data.entity.WeatherItem
-import com.example.weatherappassessment.weather.domain.model.WeatherCondition
 
 class WeatherForecastAdapter() : ListAdapter<WeatherItem,WeatherForecastAdapter.ForecastViewHolder>(ItemCallback){
 
@@ -48,11 +48,11 @@ class WeatherForecastAdapter() : ListAdapter<WeatherItem,WeatherForecastAdapter.
                 val highestTemp = item.temp?.max.orZero
                 val lowestTemp = item.temp?.min.orZero
                 val formattedTemp = "${lowestTemp}° ~ ${highestTemp}°"
-                val icon = WeatherCondition.getWeatherIcon(item.weather?.get(0)?.description.orEmpty())
+                val icon = item.weather?.get(0)?.getIcon
 
-                date.text = formatDate(item.dt!!)
+                date.text = formatDate(item.dt.orZero)
                 tempDetails.text = formattedTemp
-                weatherIcon.setImageResource(icon)
+                icon?.let { weatherIcon.setImageResource(it) }
             }
         }
 

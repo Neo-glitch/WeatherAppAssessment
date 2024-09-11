@@ -21,6 +21,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.launch
 
 
@@ -76,16 +77,17 @@ class SearchCityFragment: Fragment() {
 
     private fun initView() {
         viewBinding.apply {
-            adapter = LocationAdapter {popFragmentWithResult(it)}
+            adapter = LocationAdapter { popFragmentWithResult(it) }
             searchResultList.adapter = adapter
             backBtn.setOnClickListener { findNavController().navigateUp() }
 
             lifecycleScope.launch {
                 searchInput.addFlowTextWatcher()
                     .debounce(400L)
+                    .filter { it.isNotEmpty() }
                     .distinctUntilChanged()
-                    .collectLatest { text ->
-                        viewModel.getCities(text.toString())
+                    .collect { text ->
+                        viewModel.getCities(text)
                     }
             }
         }

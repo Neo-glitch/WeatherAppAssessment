@@ -6,8 +6,11 @@ import retrofit2.Response
 import kotlin.coroutines.cancellation.CancellationException
 
 object NetworkHelper {
-    const val WEATHER_FORECAST = "data/2.5/forecast/daily"
+    const val DAILY_FORECAST = "data/2.5/forecast/daily"
     const val CITIES = "geo/1.0/direct"
+    const val CURRENT_WEATHER = "data/2.5/weather"
+
+
     const val TEST_NETWORK_TIMER = 1500
     const val TEST_NETWORK_HOST_NAME = "www.google.com"
     const val TEST_NETWORK_PORT = 80
@@ -46,7 +49,6 @@ object NetworkHelper {
             Resource.Error(e.localizedMessage ?: CLIENT_ERROR_MSG)
         }
     }
-
 
     private inline fun <T> getErrorMessage(response: Response<T>): String {
         val errorBodyString = response.errorBody()?.string()!!

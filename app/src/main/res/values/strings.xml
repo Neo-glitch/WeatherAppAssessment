@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">WeatherAppAssessment</string>
+    <string name="no_data_message">No saved data available.\nIt looks like you haven’t added any locations yet.\nTap the <b>search icon</b> to find your city and get started!</string>
 </resources>
