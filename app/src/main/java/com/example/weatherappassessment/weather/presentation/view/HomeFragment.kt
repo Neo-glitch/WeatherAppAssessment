@@ -9,6 +9,7 @@ import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.weatherappassessment.R
+import com.example.weatherappassessment.core.presentation.LoadingState
 import com.example.weatherappassessment.core.util.LifeCycleUtil.collectInLifecycleScope
 import com.example.weatherappassessment.core.util.formatDate
 import com.example.weatherappassessment.core.util.getIcon
@@ -49,69 +50,71 @@ class HomeFragment : Fragment() {
 
     private fun observeState() {
         collectInLifecycleScope(viewModel.uiState) { uiState ->
-            handleLoadState(uiState)
-            handleError(uiState)
-            updateView(uiState)
+            when (uiState.loadingState) {
+                LoadingState.Error -> handleError(uiState)
+                LoadingState.Idle -> handleIdleState(uiState)
+                LoadingState.Loaded -> handleLoadedState(uiState)
+                LoadingState.Loading -> handleLoadingState()
+            }
         }
     }
 
-    private fun updateView(uiState: HomeUiState) {
+    private fun handleIdleState(uiState: HomeUiState){
+        viewBinding.apply {
+            progressLayout.root.hide()
+            errorLayout.root.hide()
+            mainContent.visible(uiState.currentWeather != null)
+            noDataLayout.root.visible(uiState.currentWeather == null)
+        }
+    }
+
+    private fun handleLoadedState(uiState: HomeUiState) {
         viewBinding.apply {
             val dailyForecast = uiState.dailyForecast
             val currentWeather = uiState.currentWeather
 
-            if (dailyForecast == null || currentWeather == null) {
-                mainContent.hide()
-                noDataLayout.root.show()
-            } else {
-                mainContent.show()
-                noDataLayout.root.hide()
+            errorLayout.root.hide()
+            progressLayout.root.hide()
+            noDataLayout.root.visible(uiState.currentWeather == null)
+            mainContent.visible(uiState.currentWeather != null)
 
-                adapter.submitList(dailyForecast.list.orEmpty().toMutableList())
+            adapter.submitList(dailyForecast?.list.orEmpty().toMutableList())
 
-                val icon = currentWeather.weather?.get(0)?.getIcon
-                val temperature = "${currentWeather.main?.temp}°C"
-                val humidity = "${currentWeather.main?.humidity} %"
-                val windSpeed = "${currentWeather.wind?.speed} m/s"
+            val icon = currentWeather?.weather?.get(0)?.getIcon
+            val temperature = "${currentWeather?.main?.temp}°C"
+            val humidity = "${currentWeather?.main?.humidity} %"
+            val windSpeed = "${currentWeather?.wind?.speed} m/s"
 
-                currentLocation.text = currentWeather.name
-                currentDate.text = formatDate(currentWeather.dt.orZero)
-                temp.text = temperature
-                weatherDesc.text = currentWeather.weather?.get(0)?.description
-                highTemp.text = "H: ${currentWeather.main?.tempMax}°"
-                lowTemp.text = "L: ${currentWeather.main?.tempMin}°"
-                tempValue.text = temperature
-                humidityValue.text = humidity
-                windSpeedValue.text = windSpeed
-                icon?.let { weatherIcon.setImageResource(it) }
-            }
+            currentLocation.text = currentWeather?.name
+            currentDate.text = formatDate(currentWeather?.dt.orZero)
+            temp.text = temperature
+            weatherDesc.text = currentWeather?.weather?.get(0)?.description
+            highTemp.text = "H: ${currentWeather?.main?.tempMax}°"
+            lowTemp.text = "L: ${currentWeather?.main?.tempMin}°"
+            tempValue.text = temperature
+            humidityValue.text = humidity
+            windSpeedValue.text = windSpeed
+            icon?.let { weatherIcon.setImageResource(it) }
         }
     }
 
-    private fun handleLoadState(uiState: HomeUiState) {
+    private fun handleLoadingState() {
         viewBinding.apply {
-            if (uiState.isLoading) {
-                progressLayout.root.show()
-                mainContent.hide()
-                errorLayout.root.hide()
-                noDataLayout.root.hide()
-            } else {
-                // handle the loaded state
-                progressLayout.root.hide()
-            }
+            progressLayout.root.show()
+            mainContent.hide()
+            errorLayout.root.hide()
+            noDataLayout.root.hide()
         }
     }
 
     private fun handleError(uiState: HomeUiState) {
         viewBinding.apply {
-            if (uiState.currentWeather == null && uiState.errorMessage != null){
+            if (uiState.currentWeather == null) {
                 progressLayout.root.hide()
                 mainContent.hide()
                 noDataLayout.root.hide()
                 errorLayout.root.show()
                 errorLayout.actionBtn.setOnClickListener { viewModel.getCurrentWeather() }
-            } else {
-                errorLayout.root.hide()
             }
         }
     }
@@ -122,7 +125,6 @@ class HomeFragment : Fragment() {
             searchIcon.setOnClickListener {
                 findNavController().navigate(R.id.searchCityFragment)
             }
-
             initFragmentResultListener()
         }
     }

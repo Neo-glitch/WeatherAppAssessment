@@ -3,7 +3,9 @@ package com.example.weatherappassessment.weather.presentation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.weatherappassessment.core.data.util.Resource
+import com.example.weatherappassessment.core.presentation.LoadingState
 import com.example.weatherappassessment.core.util.orZero
+import com.example.weatherappassessment.weather.data.entity.WeatherData
 import com.example.weatherappassessment.weather.data.entity.CurrentWeather
 import com.example.weatherappassessment.weather.data.entity.DailyForecast
 import com.example.weatherappassessment.weather.domain.model.Coordinates
@@ -30,17 +32,16 @@ class HomeViewModel @Inject constructor(
     val uiState = _uiState.asStateFlow()
 
     init {
-
-        repository
-            .getLocalCurrentWeather()
-            .onEach { currentWeather ->
-                _uiState.update { it.copy(currentWeather = currentWeather)}
-            }.launchIn(viewModelScope)
-
-        repository
-            .getLocalDailyForecast()
-            .onEach { dailyForecast ->
-               _uiState.update { it.copy(dailyForecast = dailyForecast) }
+        repository.getCachedWeatherData()
+            .onEach { weatherData ->
+                weatherData?.let { data ->
+                    _uiState.update {
+                        it.copy(
+                            loadingState = LoadingState.Loaded,
+                            currentWeather = data.currentWeather, dailyForecast = data.dailyForecast
+                        )
+                    }
+                }
             }.launchIn(viewModelScope)
 
         val cachedCord = repository.getLastSearchCoordinates()
@@ -67,10 +68,10 @@ class HomeViewModel @Inject constructor(
 
     fun getCurrentWeather() {
         viewModelScope.launch {
-            _uiState.update { it.copy(isLoading = true, errorMessage = null) }
+            _uiState.update { it.copy(loadingState = LoadingState.Loading, errorMessage = null) }
             when (val result= repository.getCurrentWeather(latitude, longitude)) {
                 is Resource.Error -> {
-                    _uiState.update { it.copy(isLoading = false, errorMessage = result.message) }
+                    _uiState.update { it.copy(loadingState = LoadingState.Error, errorMessage = result.message) }
                 }
                 is Resource.Success -> {
                     getDailyForecast(result.data!!)
@@ -82,10 +83,9 @@ class HomeViewModel @Inject constructor(
     private suspend fun getDailyForecast(data: CurrentWeather) {
         when(val result = repository.getDailyForecast(latitude, longitude)) {
             is Resource.Error -> {
-                _uiState.update { it.copy(isLoading = false, errorMessage = result.message) }
+                _uiState.update { it.copy(loadingState = LoadingState.Error, errorMessage = result.message) }
             }
             is Resource.Success -> {
-                _uiState.update { it.copy(isLoading = false, errorMessage = null) }
                 saveWeather(data, result.data!!)
             }
         }
@@ -93,8 +93,7 @@ class HomeViewModel @Inject constructor(
 
     private fun saveWeather(currentWeather: CurrentWeather, dailyForecast: DailyForecast) {
         viewModelScope.launch {
-            repository.saveCurrentWeather(currentWeather)
-            repository.saveDailyForecast(dailyForecast)
+            repository.saveWeatherData(WeatherData(currentWeather, dailyForecast))
         }
     }
 

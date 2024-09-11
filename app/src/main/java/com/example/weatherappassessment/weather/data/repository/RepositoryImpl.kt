@@ -1,6 +1,7 @@
 package com.example.weatherappassessment.weather.data.repository
 
 import com.example.weatherappassessment.core.data.util.Resource
+import com.example.weatherappassessment.weather.data.entity.WeatherData
 import com.example.weatherappassessment.weather.data.entity.CurrentWeather
 import com.example.weatherappassessment.weather.data.entity.Location
 import com.example.weatherappassessment.weather.data.entity.DailyForecast
@@ -29,17 +30,15 @@ class RepositoryImpl (
     override suspend fun getCities(city: String): Resource<List<Location>> =
         remoteDataSource.getCities(city)
 
-    override fun getLocalDailyForecast(): Flow<DailyForecast?> = localDataSource.getDailyForecast()
-
-    override suspend fun saveDailyForecast(weatherResponse: DailyForecast) {
-        localDataSource.saveDailyForecast(weatherResponse)
-    }
-
-    override fun getLocalCurrentWeather(): Flow<CurrentWeather?> = localDataSource.getCurrentWeather()
-
-    override suspend fun saveCurrentWeather(weatherResponse: CurrentWeather) = localDataSource.saveCurrentWeather(weatherResponse)
-
     override suspend fun saveLastSearchCoordinates(cord: Coordinates) = localDataSource.saveLastSearchCoordinates(cord)
 
     override fun getLastSearchCoordinates(): Coordinates? = localDataSource.getLastSearchCoordinates()
+
+    override suspend fun saveWeatherData(combinedWeatherData: WeatherData) {
+        localDataSource.saveWeatherData(combinedWeatherData)
+    }
+
+    override fun getCachedWeatherData(): Flow<WeatherData?> {
+        return localDataSource.getCachedWeatherData()
+    }
 }

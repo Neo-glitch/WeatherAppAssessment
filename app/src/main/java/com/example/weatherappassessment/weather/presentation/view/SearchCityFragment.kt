@@ -10,8 +10,11 @@ import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.example.weatherappassessment.core.presentation.LoadingState
 import com.example.weatherappassessment.core.util.LifeCycleUtil.collectInLifecycleScope
 import com.example.weatherappassessment.core.util.addFlowTextWatcher
+import com.example.weatherappassessment.core.util.hide
+import com.example.weatherappassessment.core.util.show
 import com.example.weatherappassessment.core.util.showToast
 import com.example.weatherappassessment.core.util.visible
 import com.example.weatherappassessment.databinding.FragmentSearchBinding
@@ -51,22 +54,50 @@ class SearchCityFragment: Fragment() {
 
     private fun observeState() {
         collectInLifecycleScope(viewModel.uiState) { uiState ->
-            adapter.submitList(uiState.locations?.toMutableList())
-
-            if (uiState.errorMessage != null) {
-                showToast(uiState.errorMessage)
-                viewModel.resetErrorState()
-            }
-
-            handleLoadState(uiState)
+            handleState(uiState)
         }
     }
 
-    private fun handleLoadState(uiState: SearchUiState) {
+    private fun handleState(uiState: SearchUiState) {
+        when (uiState.loadingState) {
+            LoadingState.Error -> handleErrorState()
+            LoadingState.Idle -> handleIdleState()
+            LoadingState.Loaded -> handleLoadedState(uiState)
+            LoadingState.Loading -> handleLoadingState()
+        }
+    }
+
+    private fun handleIdleState() {
         viewBinding.apply {
-            searchResultList.visible(!uiState.isLoading)
-            progressLayout.root.visible(uiState.isLoading)
-            noResultsLabel.visible(!uiState.isLoading && uiState.locations.orEmpty().isEmpty() && searchInput.text.isNotEmpty())
+            searchResultList.hide()
+            progressLayout.root.hide()
+            noResultsLabel.hide()
+        }
+    }
+
+    private fun handleLoadingState() {
+        viewBinding.apply {
+            progressLayout.root.show()
+            searchResultList.hide()
+            noResultsLabel.hide()
+        }
+    }
+
+    private fun handleErrorState() {
+        viewBinding.apply {
+            progressLayout.root.hide()
+            searchResultList.hide()
+            noResultsLabel.hide()
+        }
+
+    }
+
+    private fun handleLoadedState(uiState: SearchUiState) {
+        viewBinding.apply {
+            progressLayout.root.hide()
+            searchResultList.show()
+            noResultsLabel.hide()
+            adapter.submitList(uiState.locations?.toMutableList())
         }
     }
 
