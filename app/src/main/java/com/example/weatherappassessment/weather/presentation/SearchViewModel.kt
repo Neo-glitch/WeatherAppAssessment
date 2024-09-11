@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.weatherappassessment.core.data.util.Resource
 import com.example.weatherappassessment.weather.domain.repository.Repository
+import com.example.weatherappassessment.weather.presentation.uiState.SearchUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

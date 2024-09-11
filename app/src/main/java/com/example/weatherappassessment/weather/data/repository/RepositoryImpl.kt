@@ -6,6 +6,7 @@ import com.example.weatherappassessment.weather.data.entity.Location
 import com.example.weatherappassessment.weather.data.entity.DailyForecast
 import com.example.weatherappassessment.weather.domain.datasource.LocalDataSource
 import com.example.weatherappassessment.weather.domain.datasource.RemoteDataSource
+import com.example.weatherappassessment.weather.domain.model.Coordinates
 import com.example.weatherappassessment.weather.domain.repository.Repository
 import kotlinx.coroutines.flow.Flow
 
@@ -37,4 +38,8 @@ class RepositoryImpl (
     override fun getLocalCurrentWeather(): Flow<CurrentWeather?> = localDataSource.getCurrentWeather()
 
     override suspend fun saveCurrentWeather(weatherResponse: CurrentWeather) = localDataSource.saveCurrentWeather(weatherResponse)
+
+    override suspend fun saveLastSearchCoordinates(cord: Coordinates) = localDataSource.saveLastSearchCoordinates(cord)
+
+    override fun getLastSearchCoordinates(): Coordinates? = localDataSource.getLastSearchCoordinates()
 }

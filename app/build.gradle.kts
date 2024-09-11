@@ -56,51 +56,41 @@ android {
 
 dependencies {
 
-    val nav_version = "2.8.0"
-
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
     // Views/Fragments integration
-    implementation("androidx.navigation:navigation-fragment:$nav_version")
-    implementation("androidx.navigation:navigation-ui:$nav_version")
+    implementation(libs.androidx.navigation.fragment)
+    implementation(libs.androidx.navigation.ui)
 
     // hilt
-    implementation("com.google.dagger:hilt-android:2.51.1")
-    kapt("com.google.dagger:hilt-android-compiler:2.51.1")
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.android.compiler)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
-    implementation("androidx.datastore:datastore-preferences:1.1.1")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9")
+    implementation(libs.androidx.datastore.preferences)
+    implementation(libs.kotlinx.coroutines.android)
 
     // retrofit
-    implementation("com.squareup.retrofit2:retrofit:2.9.0")
-    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
-    implementation("com.squareup.retrofit2:converter-moshi:2.9.0")
-    implementation("com.squareup.retrofit2:retrofit-mock:2.9.0")
-    implementation("com.squareup.okhttp3:logging-interceptor:4.11.0")
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
+    implementation(libs.converter.moshi)
+    implementation(libs.retrofit.mock)
+    implementation(libs.logging.interceptor)
     // glide
-    implementation("com.github.bumptech.glide:glide:4.16.0")
-    kapt("com.github.bumptech.glide:compiler:4.13.0")
+    implementation(libs.glide)
+    kapt(libs.compiler)
 
     // Styled toast
-    implementation("io.github.muddz:styleabletoast:2.4.0")
+    implementation(libs.styleabletoast)
 
-    //SpinKit
-//    implementation("com.github.ybq:Android-SpinKit:1.4.0")
-
-//    implementation("android.arch.lifecycle:viewmodel:1.1.1")
-//    implementation("android.arch.lifecycle:extensions:1.1.1")
-
-//    val fragment_version = "1.5.7"
-//    // Kotlin
-//    implementation("androidx.fragment:fragment-ktx:$fragment_version")
-
+    // SplashScreen
+    implementation(libs.androidx.core.splashscreen)
 }
 
 kapt {

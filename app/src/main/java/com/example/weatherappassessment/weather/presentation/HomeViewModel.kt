@@ -3,9 +3,12 @@ package com.example.weatherappassessment.weather.presentation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.weatherappassessment.core.data.util.Resource
+import com.example.weatherappassessment.core.util.orZero
 import com.example.weatherappassessment.weather.data.entity.CurrentWeather
 import com.example.weatherappassessment.weather.data.entity.DailyForecast
+import com.example.weatherappassessment.weather.domain.model.Coordinates
 import com.example.weatherappassessment.weather.domain.repository.Repository
+import com.example.weatherappassessment.weather.presentation.uiState.HomeUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -27,6 +30,7 @@ class HomeViewModel @Inject constructor(
     val uiState = _uiState.asStateFlow()
 
     init {
+
         repository
             .getLocalCurrentWeather()
             .onEach { currentWeather ->
@@ -38,12 +42,27 @@ class HomeViewModel @Inject constructor(
             .onEach { dailyForecast ->
                _uiState.update { it.copy(dailyForecast = dailyForecast) }
             }.launchIn(viewModelScope)
+
+        val cachedCord = repository.getLastSearchCoordinates()
+        cachedCord?.let {
+            updateWeatherCord(it.latitude, it.longitude)
+        }
     }
 
     fun updateWeatherCord(latitude: Double, longitude: Double){
         this.latitude = latitude
         this.longitude = longitude
+
+        val coordinates = Coordinates(latitude.orZero, longitude.orZero)
+        cacheLastSearchedCoordinates(coordinates)
+
         getCurrentWeather()
+    }
+
+    private fun cacheLastSearchedCoordinates(cord: Coordinates) {
+        viewModelScope.launch {
+            repository.saveLastSearchCoordinates(cord)
+        }
     }
 
     fun getCurrentWeather() {
@@ -72,7 +91,7 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun saveWeather(currentWeather: CurrentWeather, dailyForecast: DailyForecast) {
+    private fun saveWeather(currentWeather: CurrentWeather, dailyForecast: DailyForecast) {
         viewModelScope.launch {
             repository.saveCurrentWeather(currentWeather)
             repository.saveDailyForecast(dailyForecast)
