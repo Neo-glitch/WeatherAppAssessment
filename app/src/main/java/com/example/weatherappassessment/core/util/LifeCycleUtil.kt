@@ -17,7 +17,6 @@ object LifeCycleUtil {
     ) {
         this.lifecycleScope.launch {
             this@collectInLifecycleScope.lifecycle.repeatOnLifecycle(lifecycleState) {
-//            repeatOnLifecycle(lifecycleState) {
                 flow.collectLatest {
                     action.invoke(it)
                 }

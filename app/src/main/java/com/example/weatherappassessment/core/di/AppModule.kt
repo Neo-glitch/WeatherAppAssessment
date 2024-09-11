@@ -31,10 +31,9 @@ class AppModule {
     @Singleton
     @Provides
     fun provideOkHttpClient(
-        @LoggerInterceptor loggingInterceptor: Interceptor,
+        loggingInterceptor: Interceptor,
     ): OkHttpClient {
         return OkHttpClient.Builder()
-//            .addInterceptor(connectionInterceptor)
             .addInterceptor(loggingInterceptor)
             .connectTimeout(30, TimeUnit.SECONDS)
             .readTimeout(30, TimeUnit.SECONDS)
@@ -42,7 +41,6 @@ class AppModule {
             .build()
     }
 
-    @LoggerInterceptor
     @Singleton
     @Provides
     fun provideHttpLoggingInterceptor(): Interceptor {
@@ -54,13 +52,6 @@ class AppModule {
 
         return logger
     }
-
-//    @ConnectionInterceptor
-//    @Singleton
-//    @Provides
-//    fun provideNetworkConnectionInterceptor() : Interceptor{
-//        return NetworkConnectionInterceptor()
-//    }
 
     @Provides
     @Singleton
@@ -79,7 +70,3 @@ class AppModule {
             .build()
     }
 }
-
-@Qualifier
-@Retention(AnnotationRetention.BINARY)
-annotation class LoggerInterceptor

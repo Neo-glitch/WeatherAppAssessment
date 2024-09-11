@@ -43,12 +43,6 @@ fun View.visible(show: Boolean) {
     if (show) show() else hide()
 }
 
-//fun ImageView.setImage(drawable: Int){
-//    GlideApp.with(this)
-//        .load(drawable)
-//        .into(this)
-//}
-
 fun Fragment.showToast(message: String, duration : Int = Toast.LENGTH_SHORT){
     StyleableToast.makeText(this.requireContext(), message, duration, R.style.ToastStyle).show()
 }

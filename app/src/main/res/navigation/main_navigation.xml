@@ -7,23 +7,16 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.example.weatherappassessment.weather.presentation.HomeFragment"
+        android:name="com.example.weatherappassessment.weather.presentation.view.HomeFragment"
         android:label="HomeFragment"
         tools:layout="@layout/fragment_home">
-        <action
-            android:id="@+id/action_homeFragment_to_searchCityBottomSheet"
-            app:destination="@id/searchCityBottomSheet" />
         <action
             android:id="@+id/action_homeFragment_to_searchCityFragment"
             app:destination="@id/searchCityFragment" />
     </fragment>
-    <dialog
-        android:id="@+id/searchCityBottomSheet"
-        android:name="com.example.weatherappassessment.weather.presentation.SearchCityBottomSheet"
-        android:label="SearchCityBottomSheet" />
     <fragment
         android:id="@+id/searchCityFragment"
         tools:layout="@layout/fragment_search"
-        android:name="com.example.weatherappassessment.weather.presentation.SearchCityFragment"
+        android:name="com.example.weatherappassessment.weather.presentation.view.SearchCityFragment"
         android:label="SearchCityFragment" />
 </navigation>

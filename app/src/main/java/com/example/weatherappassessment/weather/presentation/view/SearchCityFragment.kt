@@ -1,4 +1,4 @@
-package com.example.weatherappassessment.weather.presentation
+package com.example.weatherappassessment.weather.presentation.view
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -16,9 +16,10 @@ import com.example.weatherappassessment.core.util.showToast
 import com.example.weatherappassessment.core.util.visible
 import com.example.weatherappassessment.databinding.FragmentSearchBinding
 import com.example.weatherappassessment.weather.data.entity.Location
+import com.example.weatherappassessment.weather.presentation.uiState.SearchUiState
+import com.example.weatherappassessment.weather.presentation.SearchViewModel
 import com.example.weatherappassessment.weather.presentation.adapter.LocationAdapter
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filter
@@ -65,15 +66,9 @@ class SearchCityFragment: Fragment() {
         viewBinding.apply {
             searchResultList.visible(!uiState.isLoading)
             progressLayout.root.visible(uiState.isLoading)
-            noResultsLabel.visible(!uiState.isLoading && uiState.locations.orEmpty().isEmpty())
+            noResultsLabel.visible(!uiState.isLoading && uiState.locations.orEmpty().isEmpty() && searchInput.text.isNotEmpty())
         }
     }
-
-//    private fun handleLocationResult(locations: List<Location>) {
-//        viewBinding.apply {
-//
-//        }
-//    }
 
     private fun initView() {
         viewBinding.apply {

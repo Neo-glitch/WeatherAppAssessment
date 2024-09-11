@@ -51,34 +51,22 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/current_date" />
 
-            <androidx.core.widget.NestedScrollView
-                android:id="@+id/scroll_view"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/current_location">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
                     <androidx.cardview.widget.CardView
                         android:id="@+id/current_weather_card"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="20dp"
-                        android:layout_marginTop="20dp"
+                        android:layout_marginTop="15dp"
                         app:cardCornerRadius="8dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
+                        app:layout_constraintTop_toBottomOf="@id/current_location">
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:padding="20dp"
+                            android:background="@drawable/bg_sky_blue_gradient"
                             tools:layout_editor_absoluteX="0dp"
                             tools:layout_editor_absoluteY="0dp">
 
@@ -108,6 +96,7 @@
                                 android:layout_height="wrap_content"
                                 app:layout_constraintEnd_toStartOf="@+id/guideline1"
                                 app:layout_constraintHorizontal_bias="1.0"
+                                android:layout_marginEnd="4dp"
                                 app:layout_constraintStart_toStartOf="@+id/guideline"
                                 app:layout_constraintTop_toBottomOf="@+id/weather_desc"
                                 tools:text="H: 20°" />
@@ -116,6 +105,7 @@
                                 android:id="@+id/low_temp"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_marginStart="4dp"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintHorizontal_bias="0.0"
                                 app:layout_constraintStart_toStartOf="@+id/guideline1"
@@ -129,7 +119,7 @@
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent"
-                                tools:src="@drawable/rain" />
+                                tools:src="@drawable/ic_rain" />
 
                             <androidx.constraintlayout.widget.Guideline
                                 android:id="@+id/guideline"
@@ -153,7 +143,7 @@
                         android:id="@+id/current_temp"
                         android:layout_width="80dp"
                         android:layout_height="80dp"
-                        android:layout_marginTop="15dp"
+                        android:layout_marginTop="20dp"
                         app:cardCornerRadius="8dp"
                         app:layout_constraintEnd_toStartOf="@+id/guideline2"
                         app:layout_constraintHorizontal_bias="1.0"
@@ -272,32 +262,33 @@
 
                     </androidx.cardview.widget.CardView>
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="15dp"
-                        android:background="@drawable/bg_top_16dp"
-                        android:backgroundTint="@color/white"
-                        android:paddingHorizontal="20dp"
-                        android:paddingVertical="8dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/current_temp">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/bg_top_sky_blue_gradient_16dp"
+                android:paddingHorizontal="20dp"
+                android:paddingVertical="8dp"
+                app:layout_constrainedHeight="true"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/current_temp"
+                app:layout_constraintVertical_bias="1.0">
 
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/daily_forecast_list"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            tools:itemCount="7"
-                            tools:listitem="@layout/item_daily_forecast" />
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/daily_forecast_list"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:itemCount="7"
+                    tools:listitem="@layout/item_daily_forecast" />
 
-                    </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <androidx.constraintlayout.widget.Guideline
                         android:id="@+id/guideline2"
@@ -313,10 +304,6 @@
                         android:orientation="vertical"
                         app:layout_constraintGuide_percent="0.66" />
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-            </androidx.core.widget.NestedScrollView>
-
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -330,7 +317,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginHorizontal="10dp"
             layout="@layout/layout_progress"/>
 
         <include
@@ -342,7 +328,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginHorizontal="10dp"
             layout="@layout/layout_error_view"/>
 
         <include
@@ -355,7 +340,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginHorizontal="10dp"
             layout="@layout/layout_no_saved_data_view"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

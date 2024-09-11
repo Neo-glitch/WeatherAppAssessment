@@ -38,7 +38,6 @@ data class WeatherItem(
 	val feelsLike: FeelsLike? = null,
 	val speed: Double? = null,
 	val dt: Int? = null,
-//	val pop: Int? = null,
 	val sunset: Int? = null,
 	val weather: List<WeatherObject>? = null,
 	val humidity: Int? = null,

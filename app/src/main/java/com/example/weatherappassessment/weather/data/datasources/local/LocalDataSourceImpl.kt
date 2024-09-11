@@ -4,6 +4,7 @@ import androidx.datastore.preferences.core.stringPreferencesKey
 import com.example.weatherappassessment.weather.data.entity.CurrentWeather
 import com.example.weatherappassessment.weather.data.entity.DailyForecast
 import com.example.weatherappassessment.weather.domain.datasource.LocalDataSource
+import com.example.weatherappassessment.weather.domain.model.Coordinates
 import com.google.gson.Gson
 import com.neocalc.neocalc.core.data.datasources.local.preferences.AppPreferences
 import kotlinx.coroutines.flow.Flow
@@ -42,7 +43,20 @@ class LocalDataSourceImpl(
         return responseFlow
     }
 
+    override suspend fun saveLastSearchCoordinates(cord: Coordinates) {
+        val gson = Gson()
+        val responseJson = gson.toJson(cord)
+        preferences.putPreferences(LAST_SEARCHED_COORDINATE_KEY, responseJson)
+    }
+
+    override fun getLastSearchCoordinates(): Coordinates? {
+        val gson = Gson()
+        val responseJson = preferences.getFirstPreferences(LAST_SEARCHED_COORDINATE_KEY)
+        return gson.fromJson(responseJson, Coordinates::class.java)
+    }
+
     companion object {
+        val LAST_SEARCHED_COORDINATE_KEY = stringPreferencesKey("last_searched_coordinate")
         val DAILY_FORECAST_KEY = stringPreferencesKey("daily_forecast")
         val CURRENT_WEATHER_KEY = stringPreferencesKey("current_weather")
 

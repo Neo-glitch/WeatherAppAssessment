@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="WeatherAppBottomSheetStyle" parent="Widget.Design.BottomSheet.Modal">
-<!--        <item name="android:background">@drawable/bg_top_rounded_corners</item>-->
-    </style>
 
     <style name="ToastStyle" >
         <item name="stTextColor">@color/black</item>
@@ -10,8 +7,13 @@
         <item name="stTextSize">13sp</item>
         <item name="stColorBackground">@color/primary</item>
         <item name="stSolidBackground">false</item>
-        <item name="stLength">LONG</item> LONG or SHORT
-<!--        <item name="stGravity">bottom</item> top or center-->
+        <item name="stLength">LONG</item> 
         <item name="stRadius">10dp</item>
+    </style>
+    
+    <style name="Theme.CustomSplashScreenTheme" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/white</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_splash</item>
+        <item name="postSplashScreenTheme">@style/Theme.WeatherAppAssessment</item>
     </style>
 </resources>

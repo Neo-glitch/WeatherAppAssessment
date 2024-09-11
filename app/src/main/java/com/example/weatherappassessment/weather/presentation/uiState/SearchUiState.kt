@@ -1,4 +1,4 @@
-package com.example.weatherappassessment.weather.presentation
+package com.example.weatherappassessment.weather.presentation.uiState
 
 import com.example.weatherappassessment.weather.data.entity.Location
 

@@ -4,6 +4,7 @@ import com.example.weatherappassessment.core.data.util.Resource
 import com.example.weatherappassessment.weather.data.entity.CurrentWeather
 import com.example.weatherappassessment.weather.data.entity.Location
 import com.example.weatherappassessment.weather.data.entity.DailyForecast
+import com.example.weatherappassessment.weather.domain.model.Coordinates
 import kotlinx.coroutines.flow.Flow
 
 interface Repository {
@@ -26,5 +27,8 @@ interface Repository {
 
     fun getLocalCurrentWeather(): Flow<CurrentWeather?>
     suspend fun saveCurrentWeather(weatherResponse: CurrentWeather)
+
+    suspend fun saveLastSearchCoordinates(cord: Coordinates)
+    fun getLastSearchCoordinates(): Coordinates?
 
 }
