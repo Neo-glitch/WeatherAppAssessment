@@ -21,7 +21,6 @@ class AppPreferencesImpl (
 				emit(emptyPreferences())
 			} else {
 				exception.printStackTrace()
-//				throw exception
 			}
 		}.map {preferences ->
 			preferences[key] ?: defaultValue

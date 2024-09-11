@@ -6,7 +6,6 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import com.example.weatherappassessment.BuildConfig
-import com.example.weatherappassessment.core.data.util.NetworkConnectionInterceptor
 import com.neocalc.neocalc.core.data.datasources.local.preferences.AppPreferences
 import com.neocalc.neocalc.core.data.datasources.local.preferences.AppPreferencesImpl
 import dagger.Module
@@ -19,7 +18,6 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
-import javax.inject.Qualifier
 import javax.inject.Singleton
 
 val Context.datastore: DataStore<Preferences> by preferencesDataStore(name = "WeatherPreferences")
