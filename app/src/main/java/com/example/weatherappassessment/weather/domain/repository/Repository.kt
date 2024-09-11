@@ -1,6 +1,7 @@
 package com.example.weatherappassessment.weather.domain.repository
 
 import com.example.weatherappassessment.core.data.util.Resource
+import com.example.weatherappassessment.weather.data.entity.WeatherData
 import com.example.weatherappassessment.weather.data.entity.CurrentWeather
 import com.example.weatherappassessment.weather.data.entity.Location
 import com.example.weatherappassessment.weather.data.entity.DailyForecast
@@ -22,13 +23,10 @@ interface Repository {
         city: String
     ): Resource<List<Location>>
 
-    fun getLocalDailyForecast(): Flow<DailyForecast?>
-    suspend fun saveDailyForecast(weatherResponse: DailyForecast)
-
-    fun getLocalCurrentWeather(): Flow<CurrentWeather?>
-    suspend fun saveCurrentWeather(weatherResponse: CurrentWeather)
-
     suspend fun saveLastSearchCoordinates(cord: Coordinates)
     fun getLastSearchCoordinates(): Coordinates?
+
+    suspend fun saveWeatherData(combinedWeatherData: WeatherData)
+    fun getCachedWeatherData(): Flow<WeatherData?>
 
 }

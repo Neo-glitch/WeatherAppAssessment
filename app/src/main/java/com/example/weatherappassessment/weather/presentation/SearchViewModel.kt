@@ -3,6 +3,7 @@ package com.example.weatherappassessment.weather.presentation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.weatherappassessment.core.data.util.Resource
+import com.example.weatherappassessment.core.presentation.LoadingState
 import com.example.weatherappassessment.weather.domain.repository.Repository
 import com.example.weatherappassessment.weather.presentation.uiState.SearchUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -22,13 +23,13 @@ class SearchViewModel @Inject constructor(
 
     fun getCities(query: String) {
         viewModelScope.launch {
-            _uiState.update { it.copy(isLoading = true) }
+            _uiState.update { it.copy(loadingState = LoadingState.Loading) }
             when (val result = repository.getCities(query)) {
                 is Resource.Error -> {
-                    _uiState.update { it.copy(isLoading = false, errorMessage = result.message) }
+                    _uiState.update { it.copy(loadingState = LoadingState.Error, errorMessage = result.message) }
                 }
                 is Resource.Success -> {
-                    _uiState.update { it.copy(isLoading = false, locations = result.data) }
+                    _uiState.update { it.copy(loadingState = LoadingState.Loaded, locations = result.data) }
                 }
             }
         }
