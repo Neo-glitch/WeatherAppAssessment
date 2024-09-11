@@ -1,4 +1,4 @@
-package com.example.weatherappassessment.weather.presentation
+package com.example.weatherappassessment.weather.presentation.view
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -16,8 +16,11 @@ import com.example.weatherappassessment.core.util.hide
 import com.example.weatherappassessment.core.util.orZero
 import com.example.weatherappassessment.core.util.parcelable
 import com.example.weatherappassessment.core.util.show
+import com.example.weatherappassessment.core.util.visible
 import com.example.weatherappassessment.databinding.FragmentHomeBinding
 import com.example.weatherappassessment.weather.data.entity.Location
+import com.example.weatherappassessment.weather.presentation.uiState.HomeUiState
+import com.example.weatherappassessment.weather.presentation.HomeViewModel
 import com.example.weatherappassessment.weather.presentation.adapter.WeatherForecastAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -48,10 +51,6 @@ class HomeFragment : Fragment() {
         collectInLifecycleScope(viewModel.uiState) { uiState ->
             handleLoadState(uiState)
             handleError(uiState)
-
-//            if (uiState.currentWeather != null) {
-//                updateView(uiState)
-//            }
             updateView(uiState)
         }
     }
@@ -67,6 +66,7 @@ class HomeFragment : Fragment() {
             } else {
                 mainContent.show()
                 noDataLayout.root.hide()
+
                 adapter.submitList(dailyForecast.list.orEmpty().toMutableList())
 
                 val icon = currentWeather.weather?.get(0)?.getIcon
@@ -85,8 +85,6 @@ class HomeFragment : Fragment() {
                 windSpeedValue.text = windSpeed
                 icon?.let { weatherIcon.setImageResource(it) }
             }
-
-
         }
     }
 
@@ -100,7 +98,6 @@ class HomeFragment : Fragment() {
             } else {
                 // handle the loaded state
                 progressLayout.root.hide()
-//                updateView(uiState)
             }
         }
     }
@@ -115,7 +112,6 @@ class HomeFragment : Fragment() {
                 errorLayout.actionBtn.setOnClickListener { viewModel.getCurrentWeather() }
             } else {
                 errorLayout.root.hide()
-//                updateView(uiState)
             }
         }
     }
@@ -129,7 +125,6 @@ class HomeFragment : Fragment() {
 
             initFragmentResultListener()
         }
-//        viewModel.getWeather(42.9832406, -81.243372)
     }
 
     private fun initFragmentResultListener() {
