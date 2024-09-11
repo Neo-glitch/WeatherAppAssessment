@@ -62,22 +62,13 @@
                     android:background="@null"
                     android:hint="Search for a city"
                     android:inputType="text"
-                    android:imeOptions="actionSearch"
+                    android:imeOptions="actionDone"
                     android:maxLines="1"
                     android:textSize="14sp"
                     app:layout_constraintBottom_toBottomOf="@id/search_icon"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/search_icon"
                     app:layout_constraintTop_toTopOf="@id/search_icon" />
-
-<!--                <ImageView-->
-<!--                    android:id="@+id/clear_text_icon"-->
-<!--                    android:layout_width="10dp"-->
-<!--                    android:layout_height="10dp"-->
-<!--                    android:src="@drawable/ic_clear_search"-->
-<!--                    app:layout_constraintBottom_toBottomOf="parent"-->
-<!--                    app:layout_constraintEnd_toEndOf="parent"-->
-<!--                    app:layout_constraintTop_toTopOf="parent" />-->
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
