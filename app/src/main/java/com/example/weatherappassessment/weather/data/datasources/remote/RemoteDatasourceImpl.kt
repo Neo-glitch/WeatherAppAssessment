@@ -1,12 +1,11 @@
-package com.example.weatherappassessment.weather.data.remote.datasource
+package com.example.weatherappassessment.weather.data.datasources.remote
 
 import com.example.weatherappassessment.core.data.util.Resource
-import com.example.weatherappassessment.weather.data.remote.api.WeatherService
+import com.example.weatherappassessment.weather.data.datasources.remote.api.WeatherService
 import com.example.weatherappassessment.weather.data.entity.Location
 import com.example.weatherappassessment.weather.data.entity.WeatherResponse
 import com.example.weatherappassessment.core.data.util.NetworkHelper
 import com.example.weatherappassessment.weather.domain.datasource.RemoteDataSource
-import javax.inject.Inject
 
 class RemoteDatasourceImpl (
     private val service: WeatherService

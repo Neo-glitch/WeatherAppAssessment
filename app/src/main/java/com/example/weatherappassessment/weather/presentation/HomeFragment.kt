@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.weatherappassessment.core.util.LifeCycleUtil.collectInLifecycleScope
 import com.example.weatherappassessment.databinding.FragmentHomeBinding
+import com.example.weatherappassessment.weather.presentation.adapter.WeatherForecastAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -15,10 +16,8 @@ import dagger.hilt.android.AndroidEntryPoint
 class HomeFragment : Fragment() {
 
     private val viewModel by viewModels<HomeViewModel>()
-
-    private val viewBinding by lazy {
-        FragmentHomeBinding.inflate(layoutInflater)
-    }
+    private val viewBinding by lazy { FragmentHomeBinding.inflate(layoutInflater) }
+    private val adapter by lazy { WeatherForecastAdapter() }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,12 +35,20 @@ class HomeFragment : Fragment() {
     }
 
     private fun observeState() {
-        collectInLifecycleScope(viewModel.uiState) {
+        collectInLifecycleScope(viewModel.uiState) { uiState ->
 
         }
     }
 
     private fun initView() {
-        viewModel.getWeather(42.9832406, -81.243372)
+        viewBinding.apply {
+            dailyForecastList.adapter = adapter
+        }
+//        viewModel.getWeather(42.9832406, -81.243372)
+    }
+
+    companion object{
+        const val REQUEST_KEY = "location"
+        const val RESULT_KEY = "location_result_key"
     }
 }

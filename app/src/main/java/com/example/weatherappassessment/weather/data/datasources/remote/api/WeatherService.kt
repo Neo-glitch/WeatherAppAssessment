@@ -1,4 +1,4 @@
-package com.example.weatherappassessment.weather.data.remote.api
+package com.example.weatherappassessment.weather.data.datasources.remote.api
 
 import com.example.weatherappassessment.BuildConfig
 import com.example.weatherappassessment.weather.data.entity.Location

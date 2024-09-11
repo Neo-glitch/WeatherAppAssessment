@@ -3,4 +3,15 @@
     <style name="WeatherAppBottomSheetStyle" parent="Widget.Design.BottomSheet.Modal">
 <!--        <item name="android:background">@drawable/bg_top_rounded_corners</item>-->
     </style>
+
+    <style name="ToastStyle" >
+        <item name="stTextColor">@color/black</item>
+        <item name="stFont">@font/poppins_medium</item>
+        <item name="stTextSize">13sp</item>
+        <item name="stColorBackground">@color/primary</item>
+        <item name="stSolidBackground">false</item>
+        <item name="stLength">LONG</item> LONG or SHORT
+<!--        <item name="stGravity">bottom</item> top or center-->
+        <item name="stRadius">10dp</item>
+    </style>
 </resources>

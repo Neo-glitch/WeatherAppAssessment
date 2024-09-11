@@ -33,5 +33,9 @@ class SearchViewModel @Inject constructor(
         }
     }
 
+    fun resetErrorState(){
+        _uiState.update { it.copy(errorMessage = null) }
+    }
+
 
 }

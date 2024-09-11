@@ -4,7 +4,12 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import android.widget.EditText
+import android.widget.ImageView
+import android.widget.Toast
 import androidx.annotation.CheckResult
+import androidx.fragment.app.Fragment
+import com.example.weatherappassessment.R
+import io.github.muddz.styleabletoast.StyleableToast
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
@@ -35,4 +40,14 @@ fun View.show() {
 
 fun View.visible(show: Boolean) {
     if (show) show() else hide()
+}
+
+//fun ImageView.setImage(drawable: Int){
+//    GlideApp.with(this)
+//        .load(drawable)
+//        .into(this)
+//}
+
+fun Fragment.showToast(message: String, duration : Int = Toast.LENGTH_SHORT){
+    StyleableToast.makeText(this.requireContext(), message, duration, R.style.ToastStyle).show()
 }

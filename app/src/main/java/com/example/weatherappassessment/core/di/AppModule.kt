@@ -1,7 +1,14 @@
 package com.example.weatherappassessment.core.di
 
+import android.app.Application
+import android.content.Context
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.preferencesDataStore
 import com.example.weatherappassessment.BuildConfig
 import com.example.weatherappassessment.core.data.util.NetworkConnectionInterceptor
+import com.neocalc.neocalc.core.data.datasources.local.preferences.AppPreferences
+import com.neocalc.neocalc.core.data.datasources.local.preferences.AppPreferencesImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -14,6 +21,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 import javax.inject.Qualifier
 import javax.inject.Singleton
+
+val Context.datastore: DataStore<Preferences> by preferencesDataStore(name = "WeatherPreferences")
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -52,6 +61,13 @@ class AppModule {
 //    fun provideNetworkConnectionInterceptor() : Interceptor{
 //        return NetworkConnectionInterceptor()
 //    }
+
+    @Provides
+    @Singleton
+    fun provideAppPreferences(
+        application: Application
+    ): AppPreferences =
+        AppPreferencesImpl(application.datastore)
 
     @Singleton
     @Provides

@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android)
     id("kotlin-kapt")
     id("com.google.dagger.hilt.android")
+    id("kotlin-parcelize")
     // safe-args
 //    id("androidx.navigation.safeargs.kotlin")
 }
@@ -86,6 +87,12 @@ dependencies {
     // glide
     implementation("com.github.bumptech.glide:glide:4.16.0")
     kapt("com.github.bumptech.glide:compiler:4.13.0")
+
+    // Styled toast
+    implementation("io.github.muddz:styleabletoast:2.4.0")
+
+    //SpinKit
+//    implementation("com.github.ybq:Android-SpinKit:1.4.0")
 
 //    implementation("android.arch.lifecycle:viewmodel:1.1.1")
 //    implementation("android.arch.lifecycle:extensions:1.1.1")

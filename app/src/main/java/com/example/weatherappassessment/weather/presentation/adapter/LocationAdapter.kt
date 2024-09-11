@@ -8,7 +8,9 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.example.weatherappassessment.databinding.ItemCitySearchBinding
 import com.example.weatherappassessment.weather.data.entity.Location
 
-class LocationAdapter() : ListAdapter<Location, LocationAdapter.LocationViewHolder>(ItemCallback) {
+class LocationAdapter(
+    private val action: (Location) -> Unit
+) : ListAdapter<Location, LocationAdapter.LocationViewHolder>(ItemCallback) {
 
     object ItemCallback: DiffUtil.ItemCallback<Location>(){
         override fun areItemsTheSame(oldItem: Location, newItem: Location): Boolean {
@@ -30,11 +32,13 @@ class LocationAdapter() : ListAdapter<Location, LocationAdapter.LocationViewHold
         holder.bind(item)
     }
 
-    inner class LocationViewHolder(val binding: ItemCitySearchBinding): ViewHolder(binding.root) {
+    inner class LocationViewHolder(private val binding: ItemCitySearchBinding): ViewHolder(binding.root) {
 
         fun bind(item: Location) {
             binding.apply {
-
+                cityName.text = item.name
+                stateAndCountry.text = "${item.state} | ${item.country}"
+                root.setOnClickListener { action.invoke(item) }
             }
         }
     }
