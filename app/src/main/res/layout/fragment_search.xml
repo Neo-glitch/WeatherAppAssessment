@@ -119,6 +119,35 @@
                 android:layout_marginHorizontal="10dp"
                 layout="@layout/layout_progress"/>
 
+            <androidx.constraintlayout.widget.Group
+                android:id="@+id/error_group"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:constraint_referenced_ids="error_image, error_message"/>
+
+            <ImageView
+                android:id="@+id/error_image"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:src="@drawable/ic_network_error"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.5" />
+
+            <TextView
+                android:id="@+id/error_message"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Oops! Something went wrong"
+                android:textSize="16sp"
+                android:layout_marginTop="2dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/error_image" />
+
             <TextView
                 android:id="@+id/no_results_label"
                 android:layout_width="wrap_content"

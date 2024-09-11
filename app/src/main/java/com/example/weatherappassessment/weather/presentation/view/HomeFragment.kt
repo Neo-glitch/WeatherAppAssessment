@@ -9,6 +9,7 @@ import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.weatherappassessment.R
+import com.example.weatherappassessment.core.data.util.NetworkHelper
 import com.example.weatherappassessment.core.presentation.LoadingState
 import com.example.weatherappassessment.core.util.LifeCycleUtil.collectInLifecycleScope
 import com.example.weatherappassessment.core.util.formatDate
@@ -17,6 +18,7 @@ import com.example.weatherappassessment.core.util.hide
 import com.example.weatherappassessment.core.util.orZero
 import com.example.weatherappassessment.core.util.parcelable
 import com.example.weatherappassessment.core.util.show
+import com.example.weatherappassessment.core.util.showToast
 import com.example.weatherappassessment.core.util.visible
 import com.example.weatherappassessment.databinding.FragmentHomeBinding
 import com.example.weatherappassessment.weather.data.entity.Location
@@ -115,6 +117,8 @@ class HomeFragment : Fragment() {
                 noDataLayout.root.hide()
                 errorLayout.root.show()
                 errorLayout.actionBtn.setOnClickListener { viewModel.getCurrentWeather() }
+            } else {
+                showToast(NetworkHelper.CLIENT_ERROR_MSG)
             }
         }
     }

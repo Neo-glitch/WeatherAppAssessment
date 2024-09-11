@@ -94,6 +94,7 @@ class HomeViewModel @Inject constructor(
     private fun saveWeather(currentWeather: CurrentWeather, dailyForecast: DailyForecast) {
         viewModelScope.launch {
             repository.saveWeatherData(WeatherData(currentWeather, dailyForecast))
+            _uiState.update { it.copy(loadingState = LoadingState.Loaded, errorMessage = null) }
         }
     }
 

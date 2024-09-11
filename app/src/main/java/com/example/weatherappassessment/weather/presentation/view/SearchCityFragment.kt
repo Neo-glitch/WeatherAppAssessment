@@ -72,6 +72,7 @@ class SearchCityFragment: Fragment() {
             searchResultList.hide()
             progressLayout.root.hide()
             noResultsLabel.hide()
+            errorGroup.hide()
         }
     }
 
@@ -80,6 +81,7 @@ class SearchCityFragment: Fragment() {
             progressLayout.root.show()
             searchResultList.hide()
             noResultsLabel.hide()
+            errorGroup.hide()
         }
     }
 
@@ -88,6 +90,7 @@ class SearchCityFragment: Fragment() {
             progressLayout.root.hide()
             searchResultList.hide()
             noResultsLabel.hide()
+            errorGroup.show()
         }
 
     }
@@ -96,7 +99,8 @@ class SearchCityFragment: Fragment() {
         viewBinding.apply {
             progressLayout.root.hide()
             searchResultList.show()
-            noResultsLabel.hide()
+            errorGroup.hide()
+            noResultsLabel.visible(uiState.locations.orEmpty().isEmpty())
             adapter.submitList(uiState.locations?.toMutableList())
         }
     }
